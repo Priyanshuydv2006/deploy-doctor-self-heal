@@ -40,6 +40,9 @@ app.post('/notes', (req, res) => {
   res.status(201).json({ id: info.lastInsertRowid, text });
 });
 
+
+// Health-check endpoint (added by deploy-doctor)
+app.get('/health', (_req, res) => res.status(200).json({ status: 'ok' }));
 app.listen(PORT, () => {
   console.log(`heal-demo-app listening on port ${PORT}`);
 });
