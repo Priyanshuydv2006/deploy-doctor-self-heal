@@ -10,7 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 // ⚠️  BUG: hardcoded SQLite path crashes on Render's ephemeral filesystem
 // Error: SQLITE_CANTOPEN: unable to open database file
-const db = new Database('./data/app.db');
+// Deploy Doctor patch: replaced hardcoded SQLite path with DATABASE_URL env var.
+// Set DATABASE_URL to a hosted DB connection string (e.g. PostgreSQL on Render)
+// or leave unset to fall back to in-memory SQLite (data lost on restart — testing only).
+const db =
+new Database(process.env.DATABASE_URL || ':memory:');
 
 db.prepare(`
   CREATE TABLE IF NOT EXISTS notes (
